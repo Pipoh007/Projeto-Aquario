@@ -13,7 +13,7 @@ from utime import sleep_ms
 #lcd = I2cLcd(i2c_lcd, 0x27, 2, 16)
 
 i2c_SPI = SPI(0, 100000, mosi=Pin(19), sck=Pin(18))
-oled = SSD1306_SPI(128, 64, i2c_SPI, Pin(17),Pin(20), Pin(16))
+oled = SSD1306_SPI(128, 32, i2c_SPI, Pin(17),Pin(20), Pin(16))
 
 i2c_rtc = I2C(0,scl = Pin(1),sda = Pin(0),freq = 100000)  # We are also connecting the RTC module using I2C interface and hence we be using below
 #line of code to configure it.
@@ -33,11 +33,15 @@ now = (year,month,date,day,hour,minute,second,0)
 rtc.datetime(now)
 print(rtc.datetime())
 RTC = ' '.join(str(e) for e in rtc.datetime())
-               
+
+
 oled.fill(0)
 oled.show()
 oled.contrast(255)
 sleep(1)
-oled.text(RTC,10,50,100)
+oled.text(RTC,0,0,1)
+
+#oled.text('OLED 128x64', 40, 24, 1)
+#oled.fill_rect(26, 24, 2, 4, 0)
 oled.show()
 sleep_ms(10)
